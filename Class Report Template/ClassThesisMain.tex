@@ -1,0 +1,280 @@
+\documentclass[printMode=false, declarePage=false]{ecnuthesis}
+% printMode = false, 页面连续，printMode = true，正文前的声明页会空出一页
+\ecnuSetup{
+    info = {
+        title = {中文标题},
+        titleEN = {副标题（英文）},
+        author = {姓名},
+        studentID = {10235101},
+        department = {软件工程学院},
+        major = {软件工程},
+        supervisor = {教师名},
+        year  = 2024,
+        month = 5,
+        day = 20,
+        graduationYear = 2027, % 若 graduationYear 字段为空，则内封面毕业届别为 year
+        keywords = {梯度下降, 深度学习},
+        keywordsEN = {Gradient Descent, Deep Learning},
+    },
+    style = {
+        numbering = arabic,
+        %   arabic    使用数字进行编号 (即理科要求)
+        %   alpha     使用字母进行编号 (即外文要求)
+        %   chinese   使用汉字进行编号 (即文科要求)
+        font = times,
+        % 西文字体选择
+        %   lm        使用 TeX 自带的 Latin Modern 字体
+        %   lm        使用 TeX 自带的 XITS 系列字体
+        %   times     使用 Times 风格的西文字体
+        fontCJK = windows,
+        % 中文字体选择
+        %   fandol    使用 TeX 自带的 fandol 字体
+        %   windows   使用 Windows 系统内的字体 (中易)
+        %   mac       使用 MacOS 系统内的字体
+        logoResource = {./lectures/img/ECNULogo.png},
+        % 封面插图数据源
+        %
+        % declarePageResource = {./source/declaration.pdf},
+        % 扫描版声明页 PDF 文件
+        % 若该值为空则生成模版预定义的声明页；否则将插入指定路径所对应的 PDF 文件
+        bibResource = {./bib/thesis-ref.bib},
+        % 参考文献数据源
+        % 由于使用的是 biber + biblatex , 所以必须明确给出 .bib 后缀名
+    }
+}
+
+%——————————————导入库包——————————————————%
+\usepackage{enumitem}                                           % 列表包
+\usepackage{zhlipsum}                                           % 中文乱数文本
+\usepackage{amsmath}                                            % 数学包
+\usepackage{graphicx}                                           % 图像包
+\usepackage{geometry}                                           % 页面设置包
+\usepackage{booktabs}                                           % 表格库
+\usepackage{titlesec}                                           % 标题库
+\usepackage{fancyhdr}                                           % 页眉页脚库
+\usepackage{lastpage}                                           % 页码数库
+\usepackage{listings}                                           % 代码块包
+\usepackage{xcolor}                                             % 颜色包
+\usepackage[hidelinks]{hyperref}                                % 超链接包
+\usepackage{tikz}                                               % 绘图包
+\usepackage{tikz-qtree}                                         % 绘制树图
+\usepackage{float}                                              % 浮动体环境
+\usepackage{subcaption}                                         % 子图包
+\usepackage{pgfplots}                                           % 绘图包
+\usepackage{pgfplotstable}                                      % 表格绘图包
+\usepackage{caption}                                            % 图表标题包
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex} % 参考文献包
+
+%———————————————定义颜色—————————————————%
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\date{} % 留空，以让编译时去除日期
+
+%————————————设置页眉、页脚——————————————%
+
+\pagestyle{fancy} % 设置 plain style 的属性
+
+% 设置页眉
+
+\fancyhead[LE,RO]{~\thepage~} % 在偶数页的左侧，奇数页的右侧显示页码
+\renewcommand{\headrulewidth}{1.2pt} % 页眉与正文之间的水平线粗细
+
+% 设置页脚：在每页的右下脚以斜体显示书名
+
+\fancyfoot[RO,RE]{\it Review By \LaTeX} % 使用意大利斜体显示
+\renewcommand{\footrulewidth}{0.5pt} % 页脚水平线宽度
+
+% 设置页码：在底部居中显示页码
+
+% \pagestyle{fancy}
+% \fancyfoot[C]{\kaishu 第 \thepage 页 \ 共 \pageref{LastPage} 页} % LastPage 需要二次编译以获取总页数
+
+%——————————————代码块设置———————————————%
+
+\lstset {
+    backgroundcolor=\color{white},   % 选择背景颜色；你必须添加 \usepackage{color} 或 \usepackage{xcolor}
+    basicstyle=\footnotesize,        % 设置代码字体的大小
+    breakatwhitespace=false,         % 设置是否只在空白处自动换行
+    breaklines=true,                 % 设置自动换行
+    captionpos=bl,                   % 设置标题位置为底部
+    commentstyle=\color{mygreen},    % 注释样式
+    deletekeywords={...},            % 如果你想从给定语言中删除关键词
+    escapeinside={\%*}{*},           % 如果你想在代码中添加 LaTeX
+    extendedchars=true,              % 允许使用非 ASCII 字符；仅适用于 8 位编码，不适用于 UTF-8
+    frame=single,                    % 在代码周围添加框架
+    keepspaces=true,                 % 保持文本中的空格，对于保持代码缩进有用（可能需要 columns=flexible）
+    keywordstyle=\color{blue},       % 关键词样式
+    % language=Python,               % 代码语言
+    morekeywords={*,...},            % 如果你想向关键词集中添加更多关键词
+    numbers=left,                    % 设置行号的位置；可能的值有（none, left, right）
+    numbersep=5pt,                   % 行号与代码之间的距离
+    numberstyle=\tiny\color{mygray}, % 行号的样式
+    rulecolor=\color{black},         % 如果未设置，框架颜色可能会在非黑色文本（例如注释（此处为绿色））换行时更改
+    showspaces=false,                % 在所有地方显示空格并添加特定下划线；它会覆盖 'showstringspaces'
+    showstringspaces=false,          % 仅在字符串中显示空格
+    showtabs=false,                  % 在字符串中显示制表符并添加特定下划线
+    stepnumber=1,                    % 两个行号之间的步长。如果设置为 1，每行都会编号
+    stringstyle=\color{orange},      % 字符串字面量样式
+    tabsize=4,                       % 设置默认制表符大小为 4 个空格
+    % title=Python Code              % 显示 \lstinputlisting 包含文件的文件名；也可以尝试使用 caption 替代 title    
+}
+
+% 注释掉的部分用于后续插入代码，参数可调整，格式如下：
+
+% 1、直接插入
+% \begin{lstlisting}[language = ? , title = { ? } ]
+%       Your code here.
+% \end{lstlisting}
+% 注意，Title 不能有下划线，否则会报错。
+
+% 2、文件插入
+% \lstinputlisting[language = C , title = ?.c] {filename.c}
+
+%———————————————字体设置————————————————%
+
+% \setCJKmainfont{SimSun} % 设置正文罗马族的 CJK 字体
+% \renewcommand{\normalsize}{\fontsize{12pt}{15pt}\selectfont} % 设置正文字号
+\linespread{1.2}
+
+%———————————————超链接设置——————————————%
+
+\hypersetup{
+    pdfstartview=FitH,          % 设置PDF文档打开时的初始视图为页面宽度适应窗口宽度（即页面水平适应）
+    CJKbookmarks=true,          % 用对CJK（中文、日文、韩文）字符的书签支持，确保这些字符在书签中正确显示
+    bookmarksnumbered=true,     % 书签带有章节编号。这对有章节编号的文档很有用
+    bookmarksopen=true,         % 文档打开时，书签树是展开的，方便查看所有书签
+    colorlinks,                 % 启用彩色链接。这样，链接在PDF中会显示为彩色，而不是默认的方框
+    pdfborder=001,              % 设置PDF文档中链接的边框样式。001 表示链接周围没有边框，仅在单击时显示一个矩形
+    linkcolor=blue,             % 设置文档内部链接（如目录中的章节链接）的颜色为蓝色
+    anchorcolor=blue,           % 设置锚点链接（即目标在同一文档内的链接）的颜色为蓝色
+    citecolor=blue,             % 设置引用（如文献引用）的颜色为蓝色
+}
+
+%———————————————各种插入——————————————————%
+
+% 1、子图插入
+
+% \begin{figure} [H]
+%     \centering
+%     \begin{subfigure}[b]{0.3\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{too-slow-000001.png}
+%         \caption{学习率过低导致速度过慢}
+%         \label{fig:step021}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.3\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{medium-003.png}
+%         \caption{学习率适中}
+%         \label{fig:step086}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.3\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{too-fast-1.png}
+%         \caption{学习率过大导致损失函数抖动}
+%         \label{fig:another}
+%     \end{subfigure}
+%     \caption{学习率的选择对输出结果的影响}
+%     \label{fig:comparison}
+% \end{figure}
+%
+
+% 2、单图插入
+
+% \begin{figure} [H]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{Step021.png}
+%     \caption{Step-Size:0.21}
+%     \label{fig:gradient-descent}
+% \end{figure}
+
+% 3、Itemize 插入
+
+% \begin{itemize}
+%     \item For a linear neuron, we get a big win by decorrelating each component of the input from the other input components.
+%     \item There are several different ways to decorrelate inputs. A reasonable method is to use Principal Components Analysis.
+%     \begin{itemize}
+%         \item \textcolor{green}{Drop the principal components with the smallest eigenvalues.}
+%         \item \textcolor{red}{This achieves some dimensionality reduction.}
+%         \item \textcolor{green}{For a linear neuron}
+%     \end{itemize}
+%     \item For a circular error surface, the gradient points straight towards the minimum.
+% \end{itemize}
+
+% 4、超链接插入
+
+% \href{https://playground.tensorflow.org/}{$TensorFlow\ Playground$}
+
+%——————————————导言区结束，进入正文部分———————————————%
+
+\begin{document}
+
+% 目录
+    \tableofcontents
+
+% 声明前置部分开始, 页码设置为大写罗马数字
+    \frontmatter
+
+    \begin{abstract}
+        梯度下降是许多机器学习算法的基石，也是最受欢迎的优化算法之一。
+    \end{abstract}
+
+    \begin{abstractEN}
+        Gradient descent is the cornerstone of many machine learning algorithms and one of the most popular optimization algorithms.
+    \end{abstractEN}
+
+% 声明正文部分开始, 页码设置为阿拉伯数字
+    \mainmatter
+
+    \chapter{第一章}
+
+    \section{第一部分}
+
+    \paragraph{高斯牛顿法}
+
+    高斯-牛顿法用于求解非线性最小二乘问题, 目标是最小化残差平方和.\cite{lai2017solving}
+    高斯-牛顿法的更新公式为：
+    \begin{equation}
+        a+b=c
+    \end{equation}
+
+    \begin{equation}
+        d+e=f
+    \end{equation}
+
+    \chapter{第二章}
+
+    \section*{A More Thorough Method: Decorrelate the Input Components\cite{hinton2012neural}}
+
+% 声明后置部分开始
+    \backmatter
+
+% 致谢
+    \begin{acknowledgement}
+        在此，特别感谢提供$ECNU\ Thesis$模板的作者$Koyamin$：
+        \href{https://github.com/Koyamin/ECNUThesis-Undergraduate}{$ECNUThesis-Undergraduate$}，
+        是他设计的各种接口让我能够展现出更加新颖的排版，向课程报告增添几分色彩，
+        同时也因此学习了引用文献的正确方式（$bibTex$），也学会了$cls$文件的部分编辑方法，
+        还找到了手写公式识别的与$LateX$强关联的网站：\href{https://simpletex.cn/ai/latex_ocr}{LateX\_OCR}。
+        我深知自己尚未有完整的能力理解和完整写出这样的文献综述，大部分内容都是借鉴了其他文献，但一切都是值得感恩的，路漫漫。
+    \end{acknowledgement}
+
+% 打印参考文献
+\PrintReference
+% 在命令行中使用 latexmk -xelatex Finalthesis 来编译, 才能正确显示参考文献的编号顺序（否则会出现乱序）
+
+\newpage
+
+\section*{其余参考文献及有所帮助的网址}
+% 不会自动编号。标题前不会有数字，不会在目录中生成对应条目（除非手动添加）。
+
+\begin{itemize}
+    \item Wikipedia, \textit{Gradient Descent}, \url{https://en.wikipedia.org/wiki/Gradient_descent}, 访问时间：2023年6月9日.
+\end{itemize}
+
+\end{document}
