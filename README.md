@@ -1,10 +1,15 @@
-# 华东师范大学软件学院实验报告模板
+# 华东师范大学软件学院模板
 
 # 注意事项 #
 
 ## 说明 ##
 
-1. 本自用模板衍生于 https://github.com/Koyamin/ECNUThesis-Undergraduate
+1. 实验报告模板为自行编写.
+2. 课程报告模板衍生于 https://github.com/Koyamin/ECNUThesis-Undergraduate
+3. 课程表模板衍生于 https://github.com/xiamyphys/LiteTable
+4. 课程笔记模板衍生于 https://github.com/ElegantLaTeX/ElegantBook
+5. 答辩 Beamer 衍生于 https://github.com/godweiyang/ECNU_BeamerTemplate 
+
 ## 编译相关 ##
 
 1. 编译两次，以确保总页码、目录可以正常显示
