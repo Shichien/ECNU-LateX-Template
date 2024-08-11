@@ -21,10 +21,12 @@
 
 \documentclass[14pt,a4paper,UTF8,twoside]{article}
 
+\usepackage{enumitem}
+\usepackage{mwe}
+\usepackage{zhlipsum} % 中文乱数文本
 \usepackage{amsmath}
 \usepackage{graphicx}
-\usepackage{geometry} 
-\usepackage{ctex}
+\usepackage{geometry}
 \usepackage{booktabs} % 表格库
 \usepackage{titlesec} % 标题库
 \usepackage{fancyhdr} % 页眉页脚库
@@ -34,8 +36,10 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{tikz}
 \usepackage{tikz-qtree}
-\usepackage{fontspec} % 允许设置字体
-\usepackage{unicode-math} % 允许数学公式使用特定字体
+\usepackage{float} % 浮动体环境
+\usepackage{subcaption} % 子图包
+\usepackage{biblatex}
+\addbibresource{references.bib} % 指定你的.bib文件名称
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
