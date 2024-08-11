@@ -151,7 +151,19 @@
 % \renewcommand{\normalsize}{\fontsize{12pt}{15pt}\selectfont} % 设置正文字号
 \linespread{1.2}
 
-%——————————————————————————————————————%
+%———————————————超链接设置——————————————%
+
+\hypersetup{
+    pdfstartview=FitH, % 设置PDF文档打开时的初始视图为页面宽度适应窗口宽度（即页面水平适应）
+    CJKbookmarks=true, % 用对CJK（中文、日文、韩文）字符的书签支持，确保这些字符在书签中正确显示
+    bookmarksnumbered=true, % 书签带有章节编号。这对有章节编号的文档很有用
+    bookmarksopen=true, % 文档打开时，书签树是展开的，方便查看所有书签
+    colorlinks, % 启用彩色链接。这样，链接在PDF中会显示为彩色，而不是默认的方框
+    pdfborder=001, % 设置PDF文档中链接的边框样式。001 表示链接周围没有边框，仅在单击时显示一个矩形
+    linkcolor=blue, % 设置文档内部链接（如目录中的章节链接）的颜色为蓝色
+    anchorcolor=blue, % 设置锚点链接（即目标在同一文档内的链接）的颜色为蓝色
+    citecolor=blue, % 设置引用（如文献引用）的颜色为蓝色
+}
 
 %——————————————导言区结束，进入正文部分———————————————%
 
